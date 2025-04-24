@@ -16,20 +16,27 @@ public class PrintDanServlet extends HttpServlet {
 		
 		response.setContentType("text/html;charset=UTF-8");
 		
+		String inputedDan =request.getParameter("dan");
+		String inputedLimit = request.getParameter("limit");
 		
+		if (inputedDan == null) {
+			inputedDan = "1";
+		}
 		
-//		response.getWriter().append("8 * 1 = 8\n");
-//		response.getWriter().append(String.format("%d * %d = %d<br>", 8, 1, 8));
-//		<br> : 줄바꿈
+		if (inputedLimit == null) {
+			inputedLimit = "1";
+		}
 		
-		
+		System.out.println(inputedDan);
+		System.out.println(inputedLimit);
 	
 		
-		int dan = Integer.parseInt(request.getParameter("dan"));
+		int dan = Integer.parseInt(inputedDan);
+		int limit = Integer.parseInt(inputedLimit);
 		
 		response.getWriter().append(String.format("== %d단 ==<br>", dan));
 		
-		for (int i = 1; i <= 9; i++ ) {
+		for (int i = 1; i <= limit; i++ ) {
 			response.getWriter().append(String.format("%d * %d = %d<br>", dan, i, dan * i));
 		}
 		
