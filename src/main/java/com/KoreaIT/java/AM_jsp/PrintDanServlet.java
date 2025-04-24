@@ -32,6 +32,7 @@ public class PrintDanServlet extends HttpServlet {
 		System.out.println(inputedDan);
 		System.out.println(inputedLimit);
 	
+//		글자색 변경
 		response.getWriter().print("<body style=\"color:"+color+";\">"+"<body>");
 		
 		
