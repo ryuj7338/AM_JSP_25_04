@@ -6,6 +6,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 
 @WebServlet("/printDan")
@@ -18,6 +19,7 @@ public class PrintDanServlet extends HttpServlet {
 		
 		String inputedDan =request.getParameter("dan");
 		String inputedLimit = request.getParameter("limit");
+		String color = request.getParameter("color");
 		
 		if (inputedDan == null) {
 			inputedDan = "1";
@@ -30,6 +32,10 @@ public class PrintDanServlet extends HttpServlet {
 		System.out.println(inputedDan);
 		System.out.println(inputedLimit);
 	
+		response.getWriter().print("<body style=\"color:"+color+";\">"+"<body>");
+		
+		
+		
 		
 		int dan = Integer.parseInt(inputedDan);
 		int limit = Integer.parseInt(inputedLimit);
