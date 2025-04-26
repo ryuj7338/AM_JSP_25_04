@@ -40,6 +40,7 @@ public class ArticleDetailServlet extends HttpServlet {
 			conn = DriverManager.getConnection(url, user, password);
 			response.getWriter().append("연결 성공!");
 
+//			detail?id=
 			int id= Integer.parseInt(request.getParameter("id"));
 			
 			DBUtil dbUtil = new DBUtil(request, response);
