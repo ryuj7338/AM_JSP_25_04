@@ -46,8 +46,6 @@ public class ArticleDetailServlet extends HttpServlet {
 
 			
 
-//			String sql = String.format("SELECT * FROM article WHERE id = %d;", id);
-
 			SecSql sql = SecSql.from("SELECT *");
 			sql.append("FROM article");
 			sql.append("WHERE id = ?;", id);
