@@ -1,4 +1,4 @@
-package com.KoreaIT.java.AM_jsp;
+package com.KoreaIT.java.AM_jsp.servlet;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -7,14 +7,16 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
+import com.KoreaIT.java.AM_jsp.util.DBUtil;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet("/article/detail")
-public class ArticleDetailServlet extends HttpServlet {
+@WebServlet("/article/list")
+public class ArticleListServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -29,6 +31,7 @@ public class ArticleDetailServlet extends HttpServlet {
 
 		}
 
+
 		String url = "jdbc:mysql://127.0.0.1:3306/AM_JSP_25_04?useUnicode=true&characterEncoding=utf8&autoReconnect=true&serverTimezone=Asia/Seoul";
 		String user = "root";
 		String password = "";
@@ -38,18 +41,26 @@ public class ArticleDetailServlet extends HttpServlet {
 		try {
 			conn = DriverManager.getConnection(url, user, password);
 			response.getWriter().append("연결 성공!");
+			
+			int page = 1;
+			
+			if (request.getParameter("page") != null && request.getParameter("page").length() != 0) {
+				page = Integer.parseInt(request.getParameter("page"));
+			}
+			
+			int itemsInPage = 10;
+			int limitFrom = (page - 1) * itemsInPage;
 
-			int id = Integer.parseInt(request.getParameter("id"));
+			
+			String sql = "SELECT * FROM article;";
 
-			DBUtil dbUtil = new DBUtil(request, response);
+			List<Map<String, Object>> articleRows = DBUtil.selectRows(conn, sql);
 
-			String sql = String.format("SELECT * FROM article WHERE id = %d;", id);
+			request.setAttribute("articleRows", articleRows);
 
-			Map<String, Object> articleRow = dbUtil.selectRow(conn, sql);
+//			response.getWriter().append(articleRows.toString());
 
-			request.setAttribute("articleRow", articleRow);
-
-			request.getRequestDispatcher("/jsp/article/detail.jsp").forward(request, response);
+			request.getRequestDispatcher("/jsp/article/list.jsp").forward(request, response);
 
 		} catch (SQLException e) {
 			System.out.println("에러 1 : " + e);
