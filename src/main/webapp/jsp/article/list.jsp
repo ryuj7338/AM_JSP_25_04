@@ -15,7 +15,11 @@ List<Map<String, Object>> articleRows = (List<Map<String, Object>>) request.getA
 </head>
 <body>
 
-	<h2>게시글 목록 v2</h2>
+	<h2>게시글 목록</h2>
+	
+	 <a href="http://localhost:8080/AM_JSP_25_04/article/list" target="_blank">리스트</a>
+	 <a href="http://localhost:8080/AM_JSP_25_04/article/detail" target="_blank">상세보기</a>
+	  
 
 	<ul>
 		<%
@@ -29,18 +33,6 @@ List<Map<String, Object>> articleRows = (List<Map<String, Object>>) request.getA
 		%>
 	</ul>
 
-	<h2>게시글 목록 v1</h2>
-
-	<ul>
-		<%
-		for (int i = 0; i < articleRows.size(); i++) {
-		%>
-		<li><%=articleRows.get(i).get("id")%>번, <%=articleRows.get(i).get("regDate")%>,
-			<%=articleRows.get(i).get("title")%>,<%=articleRows.get(i).get("body")%>
-		</li>
-		<%
-		}
-		%>
-	</ul>
+	
 </body>
 </html>
