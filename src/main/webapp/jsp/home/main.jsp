@@ -12,7 +12,8 @@
 	<h1>메인 페이지</h1>
 	
 	<ul>
-		<li><a href="../article/list">리스트로 이동</a></li>
+		<li><a href="../article/list">리스트</a></li>
+		<li><a href="../article/write">글쓰기</a></li>
 	</ul>
 
 
