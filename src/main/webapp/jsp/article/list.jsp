@@ -9,6 +9,10 @@ List<Map<String, Object>> articleRows = (List<Map<String, Object>>) request.getA
 int cPage = (int) request.getAttribute("page");
 int totalCnt = (int) request.getAttribute("totalCnt");
 int totalPage = (int) request.getAttribute("totalPage");
+
+boolean isLogined = (boolean) request.getAttribute("isLogined");
+int loginedMemberId = (int) request.getAttribute("loginedMemberId");
+Map<String, Object> loginedMember = (Map<String, Object>) request.getAttribute("loginedMember");
 %>
 <!DOCTYPE html>
 <html style="text-align: center;">
@@ -17,8 +21,8 @@ int totalPage = (int) request.getAttribute("totalPage");
 <title>게시글 목록</title>
 <style>
 table {
-	margin-left:auto;
-	margin-right:auto;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 table>thead>tr>th, table>tbody>tr>td {
@@ -26,13 +30,40 @@ table>thead>tr>th, table>tbody>tr>td {
 }
 </style>
 </head>
-<body >
+<body>
 	<h2>게시글 목록</h2>
+
+	<div><%=loginedMemberId%>번 회원 로그인 중
+	</div>
+	
+
+
+	<%
+	if (isLogined) {
+	%>
+	<div>
+		<a href="../member/doLogout">로그아웃</a>
+		<a href="write">글쓰기</a>
+	</div>
+	<%
+	}
+	%>
+
+	<%
+	if (!isLogined) {
+	%>
+	<div>
+		<a href="../member/doLogin">로그인</a>
+
+	</div>
+	<%
+	}
+	%>
 
 
 
 	<a href="../home/main">메인</a>
-	<a href="write">글쓰기</a>
+
 
 	<div>
 		총 게시글 갯수 :
@@ -59,8 +90,9 @@ table>thead>tr>th, table>tbody>tr>td {
 			<tr style="text-align: center;">
 				<td><%=articleRow.get("id")%>번</td>
 				<td><%=articleRow.get("regDate")%></td>
-				<td><%=articleRow.get("writer") %></td>
-				<td><a href="detail?id=<%=articleRow.get("id")%>"><%=articleRow.get("title")%></a></td>
+				<td><%=articleRow.get("writer")%></td>
+				<td><a href="detail?id=<%=articleRow.get("id")%>"><%=articleRow.get("title")%>>>
+					</a></td>
 				<td><%=articleRow.get("body")%></td>
 				<td><a href="modify?id=<%=articleRow.get("id")%>">수정</a></td>
 				<td><a
@@ -93,7 +125,7 @@ table>thead>tr>th, table>tbody>tr>td {
 		<%
 		for (int i = 1; i <= totalPage; i++) {
 		%>
-		<a class="<%=cPage == i ? "cPage" : "" %>" href="list?page=<%=i%>"><%=i%></a>
+		<a class="<%=cPage == i ? "cPage" : ""%>" href="list?page=<%=i%>"><%=i%></a>
 		<%
 		}
 		%>
