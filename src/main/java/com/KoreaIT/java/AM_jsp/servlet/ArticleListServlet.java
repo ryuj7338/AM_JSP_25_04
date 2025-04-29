@@ -63,6 +63,8 @@ public class ArticleListServlet extends HttpServlet {
 			sql.append("LIMIT ?, ?;", limitFrom, itemsInAPage);
 
 			List<Map<String, Object>> articleRows = DBUtil.selectRows(conn, sql);
+			
+			
 
 			HttpSession session = request.getSession();
 			
@@ -76,14 +78,16 @@ public class ArticleListServlet extends HttpServlet {
 				loginedMember = (Map<String, Object>)session.getAttribute("loginedMember");
 			}
 			
-			
 			request.setAttribute("isLogined", isLogined);
+			request.setAttribute("loginedMemberId", loginedMemberId);
+			request.setAttribute("loginedMember", loginedMember);
+
+			
+			
 			request.setAttribute("page", page);
 			request.setAttribute("articleRows", articleRows);
 			request.setAttribute("totalCnt", totalCnt);
 			request.setAttribute("totalPage", totalPage);
-			request.setAttribute("loginedMemberId", loginedMemberId);
-			request.setAttribute("loginedMember", loginedMember);
 
 			
 			request.getRequestDispatcher("/jsp/article/list.jsp").forward(request, response);

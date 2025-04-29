@@ -20,6 +20,10 @@ Map<String, Object> loginedMember = (Map<String, Object>) request.getAttribute("
 <meta charset="UTF-8">
 <title>게시글 목록</title>
 <style>
+a {
+	color: black;
+}
+
 table {
 	margin-left: auto;
 	margin-right: auto;
@@ -35,7 +39,7 @@ table>thead>tr>th, table>tbody>tr>td {
 
 	<div><%=loginedMemberId%>번 회원 로그인 중
 	</div>
-	
+
 
 
 	<%
@@ -63,6 +67,7 @@ table>thead>tr>th, table>tbody>tr>td {
 
 
 	<a href="../home/main">메인</a>
+	
 
 
 	<div>
@@ -71,7 +76,7 @@ table>thead>tr>th, table>tbody>tr>td {
 	</div>
 
 	<table style="border-collapse: collapse; border-color: black;"
-		border="1px">
+		border="5px">
 		<thead>
 			<tr>
 				<th>번호</th>
@@ -91,7 +96,7 @@ table>thead>tr>th, table>tbody>tr>td {
 				<td><%=articleRow.get("id")%>번</td>
 				<td><%=articleRow.get("regDate")%></td>
 				<td><%=articleRow.get("writer")%></td>
-				<td><a href="detail?id=<%=articleRow.get("id")%>"><%=articleRow.get("title")%>>>
+				<td><a href="detail?id=<%=articleRow.get("id")%>"><%=articleRow.get("title")%>
 					</a></td>
 				<td><%=articleRow.get("body")%></td>
 				<td><a href="modify?id=<%=articleRow.get("id")%>">수정</a></td>

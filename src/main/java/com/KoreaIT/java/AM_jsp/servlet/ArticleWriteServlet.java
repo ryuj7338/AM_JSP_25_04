@@ -23,7 +23,6 @@ public class ArticleWriteServlet extends HttpServlet {
 			response.getWriter()
 			.append(String.format("<script>alert('로그인이 필요합니다.'); location.replace('../member/login');</script>"));
 
-			System.out.println(123);
 			return;
 		}
 

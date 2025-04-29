@@ -43,15 +43,15 @@ public class ArticleDoWriteServlet extends HttpServlet {
 			conn = DriverManager.getConnection(url, user, password);
 
 			
+			HttpSession session = request.getSession();
 			
-			String writer = request.getParameter("writer");
 			String title = request.getParameter("title");
 			String body = request.getParameter("body");
+			int loginedMemberId = (int) session.getAttribute("loginedMemberId");
 
 			SecSql sql = SecSql.from("INSERT INTO article");
 			sql.append("SET regDate = NOW(),");
-			sql.append("updateDate = NOW(),");
-			sql.append("writer = ?,", writer);
+			sql.append("memberId = ?,", loginedMemberId);
 			sql.append("title = ?,", title);
 			sql.append("`body` = ?;", body);
 			
@@ -59,7 +59,7 @@ public class ArticleDoWriteServlet extends HttpServlet {
 			int id = DBUtil.insert(conn, sql);
 
 			response.getWriter()
-					.append(String.format("<script>alert('%d번 글이 작성됨'); location.replace('list');</script>", id));
+					.append(String.format("<script>alert('%d번 글이 작성되었습니다.'); location.replace('list');</script>", id));
 
 		} catch (SQLException e) {
 			System.out.println("에러 1 : " + e);

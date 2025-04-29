@@ -67,6 +67,7 @@ public class MemberDoLoginServlet extends HttpServlet {
 			session.setAttribute("loginedMember", memberRow);
 			session.setAttribute("loginedMemberId", memberRow.get("id"));
 			session.setAttribute("loginedMemberLoginId", memberRow.get("loginId"));
+			session.setAttribute("loginedMemberName", memberRow.get("name"));
 			
 			
 			response.getWriter().append(
