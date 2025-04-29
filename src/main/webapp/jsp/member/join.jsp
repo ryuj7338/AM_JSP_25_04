@@ -30,29 +30,29 @@
 			let loginPwConfirm = form.loginPwConfirm.value.trim();
 
 			if (loginId.length == 0) {
-				alert('아이디 써');
+				alert('아이디를 입력하세요.');
 				form.loginId.focus();
 				return;
 			}
 			if (loginPw.length == 0) {
-				alert('비번 써');
+				alert('비밀번호를 입력하세요.');
 				form.loginPw.focus();
 				return;
 			}
 
 			if (loginPwConfirm.length == 0) {
-				alert('비번 확인 써');
+				alert('비밀번호를 다시 확인하세요.');
 				form.loginPwConfirm.focus();
 				return;
 			}
 
 			if (loginPw != loginPwConfirm) {
-				alert('비번 일치 x');
+				alert('비밀번호가 일치하지 않습니다.');
 				return;
 			}
 
 			if (form.name.value.trim().length == 0) {
-				alert('이름 써');
+				alert('이름을 입력하세요.');
 				form.name.focus();
 				return;
 			}
@@ -62,7 +62,7 @@
 		}
 	</script>
 
-	<form onsibmit="JoinForm__submit(this); return false;" action="doJoin" method="post">
+	<form onsubmit="JoinForm__submit(this); return false;" action="doJoin" method="post">
 		<div>
 			아이디 : <input autocomplete="off" type="text" placeholder="아이디 입력" name="loginId" />
 		</div>

@@ -11,17 +11,22 @@ int totalCnt = (int) request.getAttribute("totalCnt");
 int totalPage = (int) request.getAttribute("totalPage");
 %>
 <!DOCTYPE html>
-<html>
+<html style="text-align: center;">
 <head>
 <meta charset="UTF-8">
 <title>게시글 목록</title>
 <style>
+table {
+	margin-left:auto;
+	margin-right:auto;
+}
+
 table>thead>tr>th, table>tbody>tr>td {
 	padding: 5px;
 }
 </style>
 </head>
-<body>
+<body >
 	<h2>게시글 목록</h2>
 
 
@@ -34,14 +39,16 @@ table>thead>tr>th, table>tbody>tr>td {
 		<%=totalCnt%>
 	</div>
 
-	<table style="border-collapse: collapse; border-color: green;"
+	<table style="border-collapse: collapse; border-color: black;"
 		border="1px">
 		<thead>
 			<tr>
 				<th>번호</th>
 				<th>날짜</th>
+				<th>작성자</th>
 				<th>제목</th>
 				<th>내용</th>
+				<th>수정</th>
 				<th>삭제</th>
 			</tr>
 		</thead>
@@ -52,6 +59,7 @@ table>thead>tr>th, table>tbody>tr>td {
 			<tr style="text-align: center;">
 				<td><%=articleRow.get("id")%>번</td>
 				<td><%=articleRow.get("regDate")%></td>
+				<td><%=articleRow.get("writer") %></td>
 				<td><a href="detail?id=<%=articleRow.get("id")%>"><%=articleRow.get("title")%></a></td>
 				<td><%=articleRow.get("body")%></td>
 				<td><a href="modify?id=<%=articleRow.get("id")%>">수정</a></td>

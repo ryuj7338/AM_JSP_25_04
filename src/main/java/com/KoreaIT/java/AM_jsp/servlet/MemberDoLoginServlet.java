@@ -15,9 +15,10 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
-@WebServlet("/member/doJoin")
-public class MemberDoJoinServlet extends HttpServlet {
+@WebServlet("/member/doLogin")
+public class MemberDoLoginServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -41,34 +42,35 @@ public class MemberDoJoinServlet extends HttpServlet {
 		try {
 			conn = DriverManager.getConnection(url, user, password);
 
-			
 			String loginId = request.getParameter("loginId");
 			String loginPw = request.getParameter("loginPw");
-			String loginPwConfirm = request.getParameter("loginPwConfirm");
-			String name = request.getParameter("name");
-			
-			SecSql sql = SecSql.from("SELECT COUNT(*) AS cnt FROM `member`");
+
+			SecSql sql = SecSql.from("SELECT * FROM `member`");
 			sql.append("WHERE loginId = ?;", loginId);
-		
-			boolean isJoinableId = DBUtil.selectRowIntValue(conn, sql) == 0;
-			
-			if (isJoinableId == false) {
-				response.getWriter()
-				.append(String.format("<script>alert('%s는 이미 사용중입니다.'); location.replace('../member/join');</script>", loginId));
+
+			Map<String, Object> memberRow = DBUtil.selectRow(conn, sql);
+
+			if (memberRow.isEmpty()) {
+				response.getWriter().append(String.format(
+						"<script>alert('%s는 없는 아이디입니다.'); location.replace('../member/login');</script>", loginId));
 				return;
 			}
 
-			sql = SecSql.from("INSERT INTO `member`");
-			sql.append("SET regDate = NOW(),");
-			sql.append("loginId = ?,", loginId);
-			sql.append("loginPw = ?,", loginPw);
-			sql.append("`name` = ?;", name);
+			if (memberRow.get("loginPw").equals(loginPw) == false) {
+				response.getWriter().append(String.format(
+						"<script>alert('비밀번호가 일치하지 않습니다.'); location.replace('../member/login');</script>", loginId));
+				return;
+			}
+
 			
-
-			int id = DBUtil.insert(conn, sql);
-
-			response.getWriter()
-					.append(String.format("<script>alert('%s님 회원가입 되었습니다.'); location.replace('../article/list');</script>", name));
+			HttpSession session = request.getSession();
+			session.setAttribute("loginedMember", memberRow);
+			session.setAttribute("loginedMemberId", memberRow.get("id"));
+			session.setAttribute("loginedMemberLoginId", memberRow.get("loginId"));
+			
+			
+			response.getWriter().append(
+					String.format("<script>alert('로그인 되었습니다.'); location.replace('../home/main');</script>"));
 
 		} catch (SQLException e) {
 			System.out.println("에러 1 : " + e);
@@ -83,8 +85,9 @@ public class MemberDoJoinServlet extends HttpServlet {
 		}
 
 	}
-	
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		doGet(request, response);
 	}
 
