@@ -61,9 +61,9 @@ public class ArticleDoDeleteServlet extends HttpServlet {
 			
 			Map<String, Object> articleRow = DBUtil.selectRow(conn, sql);
 			
-			String loginedMemberName = (String) session.getAttribute("loginedMemberName");
+			int loginedMemberId = (int) session.getAttribute("loginedMemberId");
 			
-			if (loginedMemberName != (String) articleRow.get("writer")) {
+			if (loginedMemberId != (int) articleRow.get("memberId")) {
 				response.getWriter().append(
 						String.format("<script>alert('%d번 글에 대한 권한이 없습니다.'); location.replace('list');</script>", id));
 				return;
