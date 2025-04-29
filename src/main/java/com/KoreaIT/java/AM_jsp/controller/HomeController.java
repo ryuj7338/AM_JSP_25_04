@@ -1,37 +1,42 @@
-package com.KoreaIT.java.AM_jsp.servlet;
+package com.KoreaIT.java.AM_jsp.controller;
+
+import java.io.IOException;
+import java.sql.Connection;
+import java.util.Map;
 
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-import java.io.IOException;
-import java.util.Map;
+public class HomeController {
 
-@WebServlet("/home/main")
-public class HomeMainServlet extends HttpServlet {
+	private HttpServletRequest request;
+	private HttpServletResponse response;
+	private Connection conn;
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	public HomeController(HttpServletRequest request, HttpServletResponse response) {
+		this.conn = conn;
+		this.request = request;
+		this.response = response;
+	}
 
+	public void showMain() throws ServletException, IOException {
 		HttpSession session = request.getSession();
-		
+
 		boolean isLogined = false;
 		int loginedMemberId = -1;
 		Map<String, Object> loginedMember = null;
-		
+
 		if (session.getAttribute("loginedMemberId") != null) {
 			isLogined = true;
 			loginedMemberId = (int) session.getAttribute("loginedMemberId");
-			loginedMember = (Map<String, Object>)session.getAttribute("loginedMember");
+			loginedMember = (Map<String, Object>) session.getAttribute("loginedMember");
 		}
-		
+
 		request.setAttribute("isLogined", isLogined);
 		request.setAttribute("loginedMemberId", loginedMemberId);
-		request.setAttribute("loginedMember", loginedMember);		
-		
+		request.setAttribute("loginedMember", loginedMember);
 
 		request.getRequestDispatcher("/jsp/home/main.jsp").forward(request, response);
 
