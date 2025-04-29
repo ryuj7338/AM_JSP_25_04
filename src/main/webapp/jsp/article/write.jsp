@@ -16,12 +16,16 @@
 	<a href="../home/main">메인으로 이동</a>
 
 	<form action="doWrite" method="post">
+
 		<div>
-			제목 : <input type="text" placeholder="제목 입력" name = "title"/>
+			작성자 : <input type="text" placeholder="작성자 입력" name="writer" />
+		</div>
+		<div>
+			제목 : <input type="text" placeholder="제목 입력" name="title" />
 		</div>
 		<div>
 			내용 :
-			<textarea type="text" placeholder="내용 입력" name = "body"></textarea>
+			<textarea type="text" placeholder="내용 입력" name="body"></textarea>
 		</div>
 		<button type="submit">작성</button>
 	</form>
