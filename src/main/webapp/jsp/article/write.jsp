@@ -17,9 +17,7 @@
 
 	<form action="doWrite" method="post">
 
-		<div>
-			작성자 : <input type="text" placeholder="작성자 입력" name="writer" />
-		</div>
+		
 		<div>
 			제목 : <input type="text" placeholder="제목 입력" name="title" />
 		</div>

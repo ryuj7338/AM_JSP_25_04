@@ -57,7 +57,7 @@ table>thead>tr>th, table>tbody>tr>td {
 	if (!isLogined) {
 	%>
 	<div>
-		<a href="../member/doLogin">로그인</a>
+		<a href="../member/login">로그인</a>
 
 	</div>
 	<%
@@ -95,7 +95,7 @@ table>thead>tr>th, table>tbody>tr>td {
 			<tr style="text-align: center;">
 				<td><%=articleRow.get("id")%>번</td>
 				<td><%=articleRow.get("regDate")%></td>
-				<td><%=articleRow.get("writer")%></td>
+				<td><%=articleRow.get("name")%></td>
 				<td><a href="detail?id=<%=articleRow.get("id")%>"><%=articleRow.get("title")%>
 					</a></td>
 				<td><%=articleRow.get("body")%></td>
