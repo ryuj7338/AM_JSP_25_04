@@ -67,8 +67,8 @@ public class DispatcherServlet extends HttpServlet {
 			// /~~~/s/article/list
 
 			if (reqUriBits.length < 5) {
-				response.getWriter()
-						.append(String.format("<script>alert('올바른 요청이 아닙니다.'); location.replace('../home/main');</script>"));
+				response.getWriter().append(
+						String.format("<script>alert('올바른 요청이 아닙니다.'); location.replace('../home/main');</script>"));
 				return;
 			}
 
@@ -105,7 +105,22 @@ public class DispatcherServlet extends HttpServlet {
 					articleController.doWrite();
 					break;
 				}
-			} 
+			} else if (controllerName.equals("Member")) {
+				MemberController memberController = new MemberController(request, response, conn);
+
+				switch (actionMethodName) {
+				case "doJoin":
+					memberController.doJoin();
+					break;
+				case "doLogin":
+					memberController.doLogin();
+					break;
+				case "doLogout":
+					memberController.doLogout();
+					break;
+
+				}
+			}
 
 		} catch (SQLException e) {
 			System.out.println("에러 1 : " + e);

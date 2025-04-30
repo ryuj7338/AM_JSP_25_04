@@ -1,10 +1,11 @@
 <%@page import="java.util.List"%>
 <%@page import="java.util.Map"%>
+<%@page import="com.KoreaIT.java.AM_jsp.dto.Article"%>
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%
-List<Map<String, Object>> articleRows = (List<Map<String, Object>>) request.getAttribute("articleRows");
+List<Article> articles = (List<Article>) request.getAttribute("articles");
 
 int cPage = (int) request.getAttribute("page");
 int totalCnt = (int) request.getAttribute("totalCnt");
@@ -21,7 +22,7 @@ Map<String, Object> loginedMember = (Map<String, Object>) request.getAttribute("
 <title>게시글 목록</title>
 <style>
 a {
-	color: black;
+	color: inherit;
 }
 
 table {
@@ -37,37 +38,10 @@ table>thead>tr>th, table>tbody>tr>td {
 <body>
 	<h2>게시글 목록</h2>
 
-	<div><%=loginedMemberId%>번 회원 로그인 중
-	</div>
 
+	<%@ include file="../part/top_bar.jspf"%>
 
-
-	<%
-	if (isLogined) {
-	%>
-	<div>
-		<a href="../member/doLogout">로그아웃</a>
-		<a href="write">글쓰기</a>
-	</div>
-	<%
-	}
-	%>
-
-	<%
-	if (!isLogined) {
-	%>
-	<div>
-		<a href="../member/login">로그인</a>
-
-	</div>
-	<%
-	}
-	%>
-
-
-
-	<a href="../home/main">메인</a>
-	
+	<a href="../home/main">메인으로 이동</a>
 
 
 	<div>
@@ -75,40 +49,42 @@ table>thead>tr>th, table>tbody>tr>td {
 		<%=totalCnt%>
 	</div>
 
-	<table style="border-collapse: collapse; border-color: black;"
-		border="5px">
-		<thead>
-			<tr>
-				<th>번호</th>
-				<th>날짜</th>
-				<th>작성자</th>
-				<th>제목</th>
-				<th>내용</th>
-				<th>수정</th>
-				<th>삭제</th>
-			</tr>
-		</thead>
-		<tbody>
-			<%
-			for (Map<String, Object> articleRow : articleRows) {
-			%>
-			<tr style="text-align: center;">
-				<td><%=articleRow.get("id")%>번</td>
-				<td><%=articleRow.get("regDate")%></td>
-				<td><%=articleRow.get("name")%></td>
-				<td><a href="detail?id=<%=articleRow.get("id")%>"><%=articleRow.get("title")%>
-					</a></td>
-				<td><%=articleRow.get("body")%></td>
-				<td><a href="modify?id=<%=articleRow.get("id")%>">수정</a></td>
-				<td><a
-						onclick="if ( confirm('정말 삭제하시겠습니까?') == false ) { return false; }"
-						href="doDelete?id=<%=articleRow.get("id")%>">del</a></td>
-			</tr>
-			<%
-			}
-			%>
-		</tbody>
-	</table>
+	<div style="display: inline-block; border: 1px solid black; border-radius: 10px; overflow:hidden;">
+		<table style="border-collapse: collapse; border-color: black; border-style:hidden;"
+			border="1px">
+			<thead>
+				<tr>
+					<th>번호</th>
+					<th>날짜</th>
+					<th>작성자</th>
+					<th>제목</th>
+					<th>내용</th>
+					<th>수정</th>
+					<th>삭제</th>
+				</tr>
+			</thead>
+			<tbody>
+				<%
+				for (Article article : articles) {
+				%>
+				<tr style="text-align: center;">
+					<td><%=article.getId()%>번</td>
+					<td><%=article.getRegDate()%></td>
+					<td><%=article.getName()%></td>
+					<td><a href="detail?id=<%=article.getId()%>"><%=article.getTitle()%></a></td>
+					<td><%=article.getBody()%></td>
+					<td><a href="modify?id=<%=article.getId()%>">수정</a></td>
+					<td><a
+							onclick="if ( confirm('정말 삭제하시겠습니까?') == false ) { return false; }"
+							href="doDelete?id=<%=article.getId()%>">del</a></td>
+				</tr>
+				<%
+				}
+				%>
+			</tbody>
+		</table>
+	</div>
+
 
 	<style type="text/css">
 .page {

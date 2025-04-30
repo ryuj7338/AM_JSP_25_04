@@ -18,10 +18,11 @@ public class ArticleDao {
 	}
 
 	public int getTotalCnt() {
+
 		SecSql sql = SecSql.from("SELECT COUNT(*)");
 		sql.append("FROM article;");
 
-		return DBUtil.selectRowIntValue(null, sql);
+		return DBUtil.selectRowIntValue(conn, sql);
 	}
 
 	public List<Article> getForPrintArticles(int limitFrom, int itemsInAPage) {
@@ -32,12 +33,12 @@ public class ArticleDao {
 		sql.append("ON A.memberId = M.id");
 		sql.append("ORDER BY A.id DESC");
 		sql.append("LIMIT ?, ?;", limitFrom, itemsInAPage);
-		
-		List<Map<String, Object>> articleRows = DBUtil.selectRows(conn, sql);
-		
+
+		List<Map<String,Object>> articleRows = DBUtil.selectRows(conn, sql);
+
 		List<Article> articles = new ArrayList<>();
-		
-		for(Map<String, Object> articleMap : articleRows) {
+
+		for (Map<String, Object> articleMap : articleRows) {
 			articles.add(new Article(articleMap));
 		}
 

@@ -27,4 +27,6 @@ public class ArticleService {
 
 		return articleDao.getForPrintArticles(limitFrom, itemsInAPage);
 	}
+	
+	
 }
