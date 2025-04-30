@@ -8,6 +8,7 @@ import java.util.Map;
 
 import com.KoreaIT.java.AM_jsp.controller.ArticleController;
 import com.KoreaIT.java.AM_jsp.controller.HomeController;
+import com.KoreaIT.java.AM_jsp.controller.MemberController;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -104,7 +105,7 @@ public class DispatcherServlet extends HttpServlet {
 					articleController.doWrite();
 					break;
 				}
-			}
+			} 
 
 		} catch (SQLException e) {
 			System.out.println("에러 1 : " + e);
